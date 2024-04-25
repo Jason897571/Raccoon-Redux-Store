@@ -1,4 +1,4 @@
-import { useDispatch} from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { addToCart, removeFromCart} from "../../utils/state/cartSlice";
 
 import { idbPromise } from "../../utils/helpers";
@@ -6,6 +6,7 @@ import { idbPromise } from "../../utils/helpers";
 const CartItem = ({ item }) => {
 
   const dispatch_redux = useDispatch();
+
 
   const removeFromCartRedux = item => {
     dispatch_redux(removeFromCart(item._id));
@@ -18,12 +19,16 @@ const CartItem = ({ item }) => {
     if (value === '0') {
       dispatch_redux(removeFromCart(item._id));
       idbPromise('cart', 'delete', { ...item });
+      
 
     } else {
       dispatch_redux(addToCart({
         _id: item._id,
-        purchaseQuantity: parseInt(value)
+        purchaseQuantity: parseInt(value),
+
       }));
+      
+      
       idbPromise('cart', 'put', { ...item, purchaseQuantity: parseInt(value) });
 
     }

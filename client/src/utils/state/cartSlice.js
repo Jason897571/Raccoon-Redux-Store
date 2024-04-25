@@ -3,23 +3,34 @@ import { createSlice } from "@reduxjs/toolkit";
 export const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        _id: null,
-        purchaseQuality:1
+        products: [],
+        cart: [],
+        cartOpen: false,
+        categories: [],
+        currentCategory: '',
+        
     },
     reducers:{
+        //update products list to show in the page
+        updateProducts: (state, action) => {
+            state.products=action.payload;
+        },
         
 
         addToCart: (state, action) => {
-            state.product_id = action.payload._id;
-            state.quality = action.payload.purchaseQuality;
+
+            state.cart.push(action.payload);
+            state.cartOpen = true;
+           
         },
 
         addMultipleToCart: (state, action) => {
-            
+            state.product_id = action.payload._id;
         },
 
         updateCartQuantity: (state, action) => {
-            
+            state._id = action.payload._id;
+            state.purchaseQuality = action.payload.purchaseQuality;
         },
 
         removeFromCart: (state, action) => {
@@ -29,8 +40,9 @@ export const cartSlice = createSlice({
         clearCart: (state, action) => {
             
         },
-        ToggleCart:(state, action)=>{
-
+        toggleCart:(state, action)=>{
+            state.cartOpen = !state.cartOpen;
+            
         },
         
 
@@ -46,6 +58,6 @@ export const {
     updateCartQuantity, 
     removeFromCart, 
     clearCart, 
-    ToggleCart,} = cartSlice.actions;
+    toggleCart,} = cartSlice.actions;
 
 export default cartSlice.reducer;

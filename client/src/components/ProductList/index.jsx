@@ -1,54 +1,51 @@
 import { useEffect } from 'react';
 import ProductItem from '../ProductItem';
-
-
-
-import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
-
 import { useSelector,useDispatch } from 'react-redux';
-import { productSlice } from '../../utils/state/productSlice';
-
-
+import { updateProducts } from '../../utils/state/cartSlice';
 import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
-  const [state, dispatch] = useStoreContext();
-
-  const { currentCategory } = state;
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
+  const products = useSelector(_state => _state.cart.products);
+  const dispatch_redux = useDispatch();
+  const currentCategory = useSelector(_state => _state.cart.currentCategory)
 
 
   useEffect(() => {
     if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
+      
+      dispatch_redux(updateProducts(
+        data.products
+      ));
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
       });
     } else if (!loading) {
       idbPromise('products', 'get').then((products) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products,
-        });
+        dispatch_redux(
+          updateProducts({
+            products: products,
+          })
+          
+        );
       });
     }
-  }, [data, loading, dispatch]);
+  }, [data, loading, dispatch_redux]);
 
   function filterProducts() {
     if (!currentCategory) {
-      return state.products;
+
+      console.log(products)
+      return products;
+      
     }
 
-    return state.products.filter(
+    return products.filter(
       (product) => product.category._id === currentCategory
     );
   }
@@ -56,7 +53,7 @@ function ProductList() {
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {state.products.length ? (
+      {products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
