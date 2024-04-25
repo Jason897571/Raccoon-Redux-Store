@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const cartSlice = createSlice({
+export const categorySlice = createSlice({
     name: "category",
     initialState: {},
     reducers: {
@@ -13,3 +13,8 @@ export const cartSlice = createSlice({
 
     }
 });
+
+
+export const { updateCategories, updateCurrentCategory } = categorySlice.actions;
+
+export default categorySlice.reducer;
