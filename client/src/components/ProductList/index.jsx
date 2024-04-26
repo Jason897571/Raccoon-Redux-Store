@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import ProductItem from '../ProductItem';
 import { useSelector,useDispatch } from 'react-redux';
-import { updateProducts } from '../../utils/state/cartSlice';
+import { updateProducts } from '../../utils/state/storeSlice';
 import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
@@ -39,8 +39,6 @@ function ProductList() {
 
   function filterProducts() {
     if (!currentCategory) {
-
-      console.log(products)
       return products;
       
     }
@@ -67,7 +65,7 @@ function ProductList() {
           ))}
         </div>
       ) : (
-        <h3>You haven't added any products yet!</h3>
+        <h3>You have not added any products yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>
