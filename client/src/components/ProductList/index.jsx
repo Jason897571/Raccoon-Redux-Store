@@ -1,49 +1,44 @@
 import { useEffect } from 'react';
 import ProductItem from '../ProductItem';
-import { useSelector,useDispatch } from 'react-redux';
-import { updateProducts } from '../../utils/state/storeSlice';
+import { useStoreContext } from '../../utils/GlobalState';
+import { UPDATE_PRODUCTS } from '../../utils/actions';
 import { useQuery } from '@apollo/client';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
+  const [state, dispatch] = useStoreContext();
+
+  const { currentCategory } = state;
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
-  const products = useSelector(_state => _state.cart.products);
-  const dispatch_redux = useDispatch();
-  const currentCategory = useSelector(_state => _state.cart.currentCategory)
-
-
   useEffect(() => {
     if (data) {
-      
-      dispatch_redux(updateProducts(
-        data.products
-      ));
+      dispatch({
+        type: UPDATE_PRODUCTS,
+        products: data.products,
+      });
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
       });
     } else if (!loading) {
       idbPromise('products', 'get').then((products) => {
-        dispatch_redux(
-          updateProducts({
-            products: products,
-          })
-          
-        );
+        dispatch({
+          type: UPDATE_PRODUCTS,
+          products: products,
+        });
       });
     }
-  }, [data, loading, dispatch_redux]);
+  }, [data, loading, dispatch]);
 
   function filterProducts() {
     if (!currentCategory) {
-      return products;
-      
+      return state.products;
     }
 
-    return products.filter(
+    return state.products.filter(
       (product) => product.category._id === currentCategory
     );
   }
@@ -51,7 +46,7 @@ function ProductList() {
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {products.length ? (
+      {state.products.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
@@ -65,7 +60,7 @@ function ProductList() {
           ))}
         </div>
       ) : (
-        <h3>You have not added any products yet!</h3>
+        <h3>You haven't added any products yet!</h3>
       )}
       {loading ? <img src={spinner} alt="loading" /> : null}
     </div>
