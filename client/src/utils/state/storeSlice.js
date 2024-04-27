@@ -14,7 +14,7 @@ export const storeSlice = createSlice({
     reducers:{
         //update products list to show in the page
         updateProducts: (state, action) => {
-            state.products=action.payload;
+            state.products=action.payload.products;
         },
         
 

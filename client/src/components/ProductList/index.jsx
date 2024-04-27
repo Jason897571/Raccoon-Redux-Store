@@ -1,46 +1,42 @@
 import { useEffect } from 'react';
 import ProductItem from '../ProductItem';
-import { useStoreContext } from '../../utils/GlobalState';
-import { UPDATE_PRODUCTS } from '../../utils/actions';
 import { useQuery } from '@apollo/client';
+
+import { useSelector,useDispatch } from 'react-redux';
+import { updateProducts } from '../../utils/state/storeSlice';
+
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import { idbPromise } from '../../utils/helpers';
 import spinner from '../../assets/spinner.gif';
 
 function ProductList() {
-  const [state, dispatch] = useStoreContext();
 
-  const { currentCategory } = state;
 
-  console.log(currentCategory)
+  const currentCategory = useSelector((state) => state.store.currentCategory);
+  const products_redux = useSelector((state) => state.store.products);
+  const dispatch_redux = useDispatch();
 
   const { loading, data } = useQuery(QUERY_PRODUCTS);
 
   useEffect(() => {
     if (data) {
-      dispatch({
-        type: UPDATE_PRODUCTS,
-        products: data.products,
-      });
+      dispatch_redux(updateProducts({products: data.products}));
       data.products.forEach((product) => {
         idbPromise('products', 'put', product);
       });
     } else if (!loading) {
       idbPromise('products', 'get').then((products) => {
-        dispatch({
-          type: UPDATE_PRODUCTS,
-          products: products,
-        });
+        dispatch_redux(updateProducts({products: products}));
       });
     }
-  }, [data, loading, dispatch]);
+  }, [data, loading, dispatch_redux]);
 
   function filterProducts() {
     if (!currentCategory) {
-      return state.products;
+      return products_redux;
     }
 
-    return state.products.filter(
+    return products_redux.filter(
       (product) => product.category._id === currentCategory
     );
   }
@@ -48,7 +44,7 @@ function ProductList() {
   return (
     <div className="my-2">
       <h2>Our Products:</h2>
-      {state.products.length ? (
+      {products_redux.length ? (
         <div className="flex-row">
           {filterProducts().map((product) => (
             <ProductItem
