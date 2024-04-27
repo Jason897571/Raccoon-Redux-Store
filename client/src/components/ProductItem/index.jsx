@@ -16,7 +16,7 @@ function ProductItem(item) {
   } = item;
 
   const { cart } = state
-  console.log(cart)
+
 
   const addToCart = () => {
     const itemInCart = cart.find((cartItem) => cartItem._id === _id)

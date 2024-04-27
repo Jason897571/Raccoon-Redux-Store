@@ -4,7 +4,7 @@ import storeSlice from './storeSlice'
 
 export default configureStore({
   reducer: {
-    cart:storeSlice,
+    store:storeSlice,
 
   }
 })

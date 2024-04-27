@@ -46,10 +46,10 @@ export const storeSlice = createSlice({
             
         },
         updateCategories: (state, action) => {
-            
+            state.categories = action.payload;
         },
         updateCurrentCategory: (state, action) => {
-            
+            state.currentCategory = action.payload.currentCategory;
         }
         
 
