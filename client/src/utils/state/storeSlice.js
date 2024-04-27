@@ -20,7 +20,7 @@ export const storeSlice = createSlice({
 
         addToCart: (state, action) => {
 
-            state.cart.push(action.payload);
+            state.cart.push(action.payload.product);
             state.cartOpen = true;
            
         },
@@ -30,8 +30,14 @@ export const storeSlice = createSlice({
         },
 
         updateCartQuantity: (state, action) => {
-            state._id = action.payload._id;
-            state.purchaseQuality = action.payload.purchaseQuality;
+            state.cartOpen = true;
+            state.cart = state.cart.map((item)=>{
+
+                if(item._id === action.payload._id){
+                    item.purchaseQuantity = action.payload.purchaseQuantity;
+                }
+                return item;
+            })
         },
 
         removeFromCart: (state, action) => {
