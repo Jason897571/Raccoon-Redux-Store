@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/Raccoon-Redux-Store');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://kinggs1314:RbxgaC8hT30geRSs@raccoon-redux-store.lfcavik.mongodb.net/');
 
 module.exports = mongoose.connection;
