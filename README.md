@@ -3,18 +3,19 @@
 
 <div align="center">
   <a href="https://github.com/Jason897571/Raccoon-Redux-Store">
-    <img src="./client/src/assets/readme/search.png" alt="Logo" width="80" height="80">
+    <span role="img" aria-label="shopping bag">🛍️</span>
   </a>
 
-  <h3 align="center">Raccoon Book Search Engine</h3>
+  <h3 align="center">Raccoon Redux Store</h3>
 
   <p align="center">
-    This is a book search engine that uses google books API. It allows users to browser books based on their search query and save their favorite books into their accounts
+    This is a E-commerce website to sell products. It allows users to login and sign up. The customer is able to add their items into cart and checkout.
+    <br />
     <br />
     <a href="https://github.com/Jason897571/Raccoon-Redux-Store"><strong>Click here for Github Repo  »</strong></a>
     <br />
     <br />
-    <a href="https://Raccoon-Redux-Store.onrender.com/">Deployed Website</a>
+    <a href="https://raccoon-redux-store.onrender.com">Deployed Website</a>
     ·
     <a href="https://github.com/Jason897571/Raccoon-Redux-Store/issues">Report Bug</a>
     ·
@@ -74,7 +75,7 @@ This generator is made with Javascript.
 <a id="getting_started"></a>
 ## Getting Started
 
-You cold see my portfolio through visiting the link: https://main--genuine-cheesecake-dbf6d2.netlify.app/
+You cold see the website through visiting the link: https://raccoon-redux-store.onrender.com//
 
 <a id="prerequisities"></a>
 ### Prerequisites
@@ -89,7 +90,9 @@ You should have your shell ready for downloading this project. We use gitbash as
    git clone https://github.com/Jason897571/Raccoon-Redux-Store.git
    ```
 
-3. In your terminal, input `npm run develop` to start both front and back end.
+3. In your terminal, input `npm run dev` to start both front and back end. Before start the project, you should input `npm run seed` to import data and input `npm i && npm run install` to install necessary packages.
+
+4. After the project is running, you can visit the website through the link: https://raccoon-redux-store.onrender.com/
 
 
 
@@ -104,23 +107,20 @@ You should have your shell ready for downloading this project. We use gitbash as
 
 ### Sign Up/Login
 ![alt text](./client/src/assets/readme/signup.png)
-
+![alt text](./client/src/assets/readme/signin.png)
 By clicking the Login/Sign Up button in the right corner, you are able to sign up an account and login
 
-### Search Books
-![alt text](./client/src/assets/readme/searchBooks.png)
 
-By typing in the search box, you are able to search books. and the results are showing below.
 
-### Save Books
-![alt text](./client/src/assets/readme/saveBooks.png)
+### Add Items to Cart
+![alt text](./client/src/assets/readme/addItem.png)
 
-By clicking the save button, you are able to save the book you are interested in.
+By clicking the Add to Cart, you are able to Add the items into your cart.
 
-### See Your Favorite Books
-![alt text](./client/src/assets/readme/favorite.png)
+### See Your Order History
+![alt text](./client/src/assets/readme/history.png)
 
-By clicking the `See Your Books` button, you are able to see your favorite books.
+By clicking the `Order History` button, you are able to see your order history.
 
 
 For more details, please refer to the [Documentation](https://github.com/Jason897571/Raccoon-Redux-Store) 
