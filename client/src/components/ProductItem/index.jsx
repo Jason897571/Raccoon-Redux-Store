@@ -31,7 +31,7 @@ function ProductItem(item) {
         _id: _id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       }));
-      console.log("1")
+
       idbPromise('cart', 'put', {
         ...itemInCart,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
@@ -39,7 +39,7 @@ function ProductItem(item) {
     } else {
       dispatch_redux(addToCart({product: { ...item, purchaseQuantity: 1 }}));
       idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
-      console.log("2")
+
     }
   }
 

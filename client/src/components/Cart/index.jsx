@@ -22,6 +22,8 @@ const Cart = () => {
 
   const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
+  console.log(data);
+
   useEffect(() => {
     if (data) {
       stripePromise.then((res) => {
@@ -31,19 +33,17 @@ const Cart = () => {
   }, [data]);
 
   useEffect(() => {
-    async function getCart() {
+    (async () => {
       const cart = await idbPromise('cart', 'get');
       dispatch_redux(clearCart());
       dispatch_redux(addMultipleToCart({ products: [...cart] }));
-    }
-
-    if (cart_redux.length) {
-      getCart();
-    }
+    })();
   }, [cart_redux.length, dispatch_redux]);
 
   function toggleCartRedux() {
+
     dispatch_redux(toggleCart());
+
   }
 
   function calculateTotal() {
@@ -62,7 +62,7 @@ const Cart = () => {
         productIds.push(item._id);
       }
     });
-
+    console.log(productIds);
     getCheckout({
       variables: { products: productIds },
     });
@@ -70,7 +70,7 @@ const Cart = () => {
 
   if (!cartOpen) {
     return (
-      <div className="cart-closed" onClick={toggleCart}>
+      <div className="cart-closed" onClick={toggleCartRedux}>
         <span role="img" aria-label="trash">
           🛒
         </span>
