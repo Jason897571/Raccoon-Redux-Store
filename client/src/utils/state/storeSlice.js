@@ -26,7 +26,7 @@ export const storeSlice = createSlice({
         },
 
         addMultipleToCart: (state, action) => {
-            state.product_id = action.payload._id;
+            state.cart.push(...action.payload.products);
         },
 
         updateCartQuantity: (state, action) => {
@@ -41,11 +41,11 @@ export const storeSlice = createSlice({
         },
 
         removeFromCart: (state, action) => {
-            
+            state.cart = state.cart.filter(item => item._id !== action.payload._id);
         },
 
         clearCart: (state, action) => {
-            
+            state.cart = [];
         },
         toggleCart:(state, action)=>{
             state.cartOpen = !state.cartOpen;
